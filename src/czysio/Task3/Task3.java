@@ -6,44 +6,42 @@ public class Task3 {
 
 	public static void main(String[] args) {
 
+		
+		Scanner scan = new Scanner(System.in);
 		System.out.println("Think about a number between \"0\" and \"1000\", and I will guess it in max. 10 tries.");
 
+		String playersHint = null;
 		int min = 0;
 		int max = 1000;
-		String playersHint = null;
-
-		try (Scanner scan = new Scanner(System.in)) {
-			int guess = ((max - min) / 2) + min;
-			System.out.println("My guess is " + guess);
-			System.out.print("Write \"too high\", \"too low\" or \"correct\":");
-			do {
+		do {
+				int guess = ((max - min) / 2) + min;
+				System.out.println("My guess is " + guess);
+				System.out.print("Write \"too high\", \"too low\" or \"correct\":");
 				playersHint = scan.nextLine();
-				if (isPlayersHintCorrect(playersHint)) {
-					warnAboutIncorrectPlayersHint();
-				} else if ("too low".equalsIgnoreCase(playersHint)) {
+				playersHint = playersHint.trim();
+				System.out.println(playersHint);
+				// if (playersHint == null || playersHint.trim().isEmpty() ||
+				// !"correct".equals(playersHint)
+				// || !"too high".equals(playersHint) || !"too low".equals(playersHint)) {
+				// warnAboutIncorrectPlayersHint();
+				// } else
+				if ("too low".equals(playersHint)) {
 					min = guess;
-				} else if ("too high".equalsIgnoreCase(playersHint)) {
+				} else if ("too high".equals(playersHint)) {
 					max = guess;
+				} else if ("correct".equals(playersHint)) {
+					System.out.println("I won!");
+				} else {
+					warnAboutIncorrectPlayersHint();
 				}
+			}
+			while (!"correct".equals(playersHint))
+				;
 
-			} while (!"correct".equalsIgnoreCase(playersHint) || !"too low".equalsIgnoreCase("too low")
-					|| !"too high".equalsIgnoreCase(playersHint));
-
-		}
-		while (!"correct".equalsIgnoreCase(playersHint))
-			;
-		System.out.println("I won!");
-
-	}
-
-	private static boolean isPlayersHintCorrect(String playersHint) {
-		return playersHint == null || playersHint.trim().isEmpty(); 
-//				|| !"correct".equalsIgnoreCase(playersHint)
-//				|| !"too high".equalsIgnoreCase(playersHint) || !"too low".equalsIgnoreCase(playersHint);
 	}
 
 	static void warnAboutIncorrectPlayersHint() {
-		System.out.println("Don't cheat`.");
+		System.out.println("Don't cheat.");
 
 	}
 
